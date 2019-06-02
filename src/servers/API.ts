@@ -2,21 +2,25 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
-import { routes } from './routes/index';
-import * as socketio from 'socket.io';
-import * as httpnode from 'http';
+import { routes } from '../routes/index';
 
-export class App {
+export class API {
   express: express.Application;
-  http: httpnode.Server;
-  socket: socketio.Server;
+  static readonly PORT: number = 3132;
+  private port: string | number;
 
-  constructor() {
-    this.express = express();
+  constructor(_express: express.Application) {
+    this.port = process.env.PORT || API.PORT;
+    this.express = _express;
     this.setDefaults();
     this.mountRoutes();
-    this.http = new httpnode.Server(this.express);
-    this.socket = new socketio();
+    this.listen();
+  }
+
+  private listen(): void {
+    this.express.listen(this.port, () => {
+      console.log(`API is running on port ${this.port}`);
+    });
   }
 
   private setDefaults(): void {

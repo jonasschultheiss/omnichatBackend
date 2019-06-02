@@ -1,6 +1,5 @@
-import { App } from './App';
+import { API } from './servers/API';
+import { Socket } from './servers/Socket';
 
-const app = new App();
-app.express.listen(3132, () => {
-  console.log('server is running');
-});
+const socket = new Socket();
+const api = new API(socket.getApp());
