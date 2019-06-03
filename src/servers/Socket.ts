@@ -3,30 +3,28 @@ import * as express from 'express';
 import * as socketio from 'socket.io';
 
 import { Message } from '../models/index';
+import { AbstractServer } from './AbstractServer';
 
-export class Socket {
-  static readonly PORT: number = 3133;
-  private app: express.Application;
+export class Socket extends AbstractServer {
   private server: Server;
   private io: SocketIO.Server;
-  private port: string | number;
 
-  constructor() {
-    this.app = express();
-    this.server = createServer(this.app);
-    this.port = process.env.PORT || Socket.PORT;
+  constructor(_port: number) {
+    super(_port);
+    this.server = createServer(this.getExpress());
     this.io = socketio(this.server);
-
-    this.listen();
+    this.listen2();
   }
 
-  private listen(): void {
-    this.server.listen(this.port, () => {
-      console.log(`socket server running on port ${this.port}`);
+  protected listen2(): void {}
+
+  protected listen(): void {
+    this.server.listen(this.getPort(), () => {
+      console.log(`socket server running on port ${this.getPort()}`);
     });
 
     this.io.on('connect', (socket: socketio.Socket) => {
-      console.log('Connected client on port %s.', this.port);
+      console.log('Connected client on port %s.', this.getPort());
       socket.on('message', (m: Message) => {
         console.log('[server](message): %s', JSON.stringify(m));
         this.io.emit('message', m);
@@ -36,9 +34,5 @@ export class Socket {
         console.log('Client disconnected');
       });
     });
-  }
-
-  getApp(): express.Application {
-    return this.app;
   }
 }

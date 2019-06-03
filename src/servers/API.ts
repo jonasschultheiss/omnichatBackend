@@ -10,13 +10,7 @@ export class API extends AbstractServer {
     super(port);
     this.setDefaults();
     this.mountRoutes();
-    this.listen();
-  }
-
-  private listen(): void {
-    this.getExpress().listen(this.getPort(), () => {
-      console.log(`API is running on port ${this.getPort()}`);
-    });
+    super.listen();
   }
 
   private setDefaults(): void {
@@ -27,6 +21,6 @@ export class API extends AbstractServer {
   }
 
   private mountRoutes(): void {
-    this.express.use('/api/v1/', [routes]);
+    this.getExpress().use('/api/v1/', [routes]);
   }
 }

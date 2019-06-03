@@ -3,13 +3,11 @@ import { Server } from 'http';
 
 export abstract class AbstractServer {
   private express: express.Application;
-  // private http: Server;
   private port: number;
 
   constructor(_port: number) {
     this.port = _port;
     this.express = express();
-    // this.http = new Server();
   }
 
   protected getExpress(): express.Application {
@@ -20,5 +18,9 @@ export abstract class AbstractServer {
     return this.port;
   }
 
-  abstract listen(): void;
+  protected listen(): void {
+    this.getExpress().listen(this.getPort(), () => {
+      console.log(`API is running on port ${this.getPort()}`);
+    });
+  }
 }
