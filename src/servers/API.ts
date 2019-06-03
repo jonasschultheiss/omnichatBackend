@@ -3,30 +3,27 @@ import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
 import { routes } from '../routes/index';
+import { AbstractServer } from './AbstractServer';
 
-export class API {
-  express: express.Application;
-  static readonly PORT: number = 3132;
-  private port: string | number;
-
-  constructor(_express: express.Application) {
-    this.port = process.env.PORT || API.PORT;
-    this.express = _express;
+export class API extends AbstractServer {
+  constructor(port: number) {
+    super(port);
     this.setDefaults();
     this.mountRoutes();
     this.listen();
   }
 
   private listen(): void {
-    this.express.listen(this.port, () => {
-      console.log(`API is running on port ${this.port}`);
+    this.getExpress().listen(this.getPort(), () => {
+      console.log(`API is running on port ${this.getPort()}`);
     });
   }
 
   private setDefaults(): void {
-    this.express.use(cors());
-    this.express.use(helmet());
-    this.express.use(bodyParser.json());
+    const express = this.getExpress();
+    express.use(cors());
+    express.use(helmet());
+    express.use(bodyParser.json());
   }
 
   private mountRoutes(): void {
