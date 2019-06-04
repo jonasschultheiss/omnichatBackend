@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { Server } from 'http';
 
 export abstract class AbstractServer {
   private express: express.Application;
