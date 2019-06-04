@@ -12,11 +12,9 @@ export class Socket extends AbstractServer {
   constructor(_port: number) {
     super(_port);
     this.server = createServer(this.getExpress());
-    this.io = socketio(this.server);
-    this.listen2();
+    this.io = socketio.listen(this.server);
+    this.listen();
   }
-
-  protected listen2(): void {}
 
   protected listen(): void {
     this.server.listen(this.getPort(), () => {
