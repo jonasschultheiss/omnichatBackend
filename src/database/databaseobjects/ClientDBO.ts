@@ -2,10 +2,7 @@ import { prop, Typegoose, ModelType, InstanceType } from 'typegoose';
 
 export class ClientDBO extends Typegoose {
   @prop({ required: true, unique: true })
-  id?: number;
-
-  @prop({ required: true, unique: true })
-  username?: string;
+  userId?: number;
 
   @prop()
   role?: string;

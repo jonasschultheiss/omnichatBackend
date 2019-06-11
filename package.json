@@ -39,6 +39,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^3.18.0",
+    "mongodb": "^3.2.7",
     "mongoose": "^5.5.14",
     "socket.io": "^2.2.0",
     "typegoose": "^5.7.1"
