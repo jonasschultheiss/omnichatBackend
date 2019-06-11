@@ -2,15 +2,15 @@
   "name": "omnichatbackend",
   "version": "0.0.1",
   "description": "",
-  "main": "build/src/index.js",
-  "types": "build/src/index.d.ts",
+  "main": "build/src/Index.js",
+  "types": "build/src/Index.d.ts",
   "files": [
     "build/src"
   ],
   "license": "Apache-2.0",
   "keywords": [],
   "scripts": {
-    "start": "tsc -p . && node build/src/index.js",
+    "start": "tsc -p . && node build/src/Index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "gts check",
     "clean": "gts clean",

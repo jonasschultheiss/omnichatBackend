@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
-import { ClientDBO } from './databaseobjects/ClientDBO';
+import { ClientDBO } from '../database/databaseobjects/ClientDBO';
 
-export class DataBase {
+export class Database {
   private mongoose: mongoose.Mongoose;
   private databaseUri: string;
   private db!: mongoose.Connection;
@@ -30,13 +30,4 @@ export class DataBase {
       }
     );
   }
-
-  // async test() {
-  //   const clientDBO = new ClientDBO();
-  //   const clientDBOModel = clientDBO.getModelForClass(clientDBO);
-  //   const u = new clientDBOModel({ username: 'firstUser' });
-  //   await u.save();
-  //   const client = await clientDBOModel.findOne();
-  //   console.log(JSON.stringify(console.log(client, 'undefined', 2)));
-  // }
 }

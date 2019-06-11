@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
-import { routes } from '../routes/index';
+import { routes } from '../routes/Index';
 import { AbstractServer } from './AbstractServer';
 
 export class API extends AbstractServer {
