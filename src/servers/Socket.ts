@@ -24,9 +24,11 @@ export class Socket extends AbstractServer {
     this.io.on('connect', (socket: socketio.Socket) => {
       console.log('Connected client on port %s.', this.getPort());
       console.log(`socket id: ${socket.id}`);
-      socket.on('message', (m: Message) => {
+      socket.join('global');
+
+      socket.in('global').on('message', (m: Message) => {
         console.log('[server](message): %s', JSON.stringify(m));
-        this.io.emit('message', m);
+        this.io.sockets.in('global').emit('message', m);
       });
 
       socket.on('disconnect', () => {

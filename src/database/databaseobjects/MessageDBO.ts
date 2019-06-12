@@ -8,11 +8,14 @@ export class MessageDBO extends Typegoose {
   senderName?: string;
 
   @prop({ required: true })
+  body?: string;
+
+  @prop({ required: true })
   chatId?: number;
 
   @prop({ required: true })
   isEdited?: string;
 
   @prop({ required: true })
-  timestamp?: string;
+  timestamp?: number;
 }

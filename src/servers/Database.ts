@@ -14,6 +14,9 @@ export class Database {
   }
 
   private createConnection() {
+    const gg = new ClientDBO();
+    const ff = gg.getModelForClass(gg);
+
     this.mongoose.connect(
       this.databaseUri,
       { useNewUrlParser: true },
