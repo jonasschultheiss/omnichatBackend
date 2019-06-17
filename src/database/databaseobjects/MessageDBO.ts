@@ -14,7 +14,7 @@ export class MessageDBO extends Typegoose {
   chatId?: number;
 
   @prop({ required: true })
-  isEdited?: string;
+  isEdited?: boolean;
 
   @prop({ required: true })
   timestamp?: number;

@@ -1,9 +1,12 @@
 import { prop, Typegoose, ModelType, InstanceType } from 'typegoose';
+import { Chat } from '../../models/interfaces/IChat';
+import { Friend } from '../../models/interfaces/IFriend';
+import { FriendRequest } from '../../models/interfaces/IFriendRequest';
 
 export class ClientDBO extends Typegoose {
   @prop({ required: true, unique: true })
   userId?: number;
-  
+
   @prop()
   description?: string;
 
@@ -11,26 +14,23 @@ export class ClientDBO extends Typegoose {
   pictureUri?: string;
 
   @prop()
-  conversations?: [];
+  conversations?: Chat[];
 
   @prop()
-  groupchats?: [];
+  groupchats?: Chat[];
 
   @prop()
-  lastLogin?: string;
+  lastLogin?: number;
 
   @prop()
-  friends?: [];
+  friends?: Friend[];
 
   @prop()
-  friendRequest?: [];
+  friendRequests?: FriendRequest[];
 
   @prop()
-  sentFriendRequests?: [];
+  sentFriendRequests?: FriendRequest[];
 
   @prop()
-  createdAt?: string;
-
-  @prop()
-  updatedAt?: string;
+  createdAt?: number;
 }

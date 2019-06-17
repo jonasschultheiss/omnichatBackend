@@ -1,5 +1,4 @@
 import * as mongoose from 'mongoose';
-import { ClientDBO } from '../database/databaseobjects/ClientDBO';
 
 export class Database {
   private mongoose: mongoose.Mongoose;
@@ -15,7 +14,6 @@ export class Database {
 
   private createConnection() {
     const gg = new ClientDBO();
-    const ff = gg.getModelForClass(gg);
 
     this.mongoose.connect(
       this.databaseUri,

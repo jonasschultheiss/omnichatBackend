@@ -2,6 +2,9 @@ import { User } from './User';
 import { Chat } from './interfaces/IChat';
 import { Friend } from './interfaces/IFriend';
 import { FriendRequest } from './interfaces/IFriendRequest';
+import { ClientDBO } from '../database/databaseobjects/Index';
+import { InstanceType } from 'typegoose';
+import { Model } from 'mongoose';
 
 export class Client extends User {
   private description: string;
@@ -12,6 +15,8 @@ export class Client extends User {
   private friends: Friend[];
   private friendRequests: FriendRequest[];
   private sentFriendRequests: FriendRequest[];
+  private createdAt: number;
+  private clientDBO: Model<InstanceType<ClientDBO>>;
 
   constructor(
     _userId: number,
@@ -23,7 +28,8 @@ export class Client extends User {
     _lastLogin: number,
     _friends: Friend[],
     _friendRequest: FriendRequest[],
-    _sentFriendRequests: FriendRequest[]
+    _sentFriendRequests: FriendRequest[],
+    _createdAt: number
   ) {
     super(_userId, _username);
     this.description = _description;
@@ -34,6 +40,8 @@ export class Client extends User {
     this.friends = _friends;
     this.friendRequests = _friendRequest;
     this.sentFriendRequests = _sentFriendRequests;
+    this.createdAt = _createdAt;
+    this.clientDBO = new ClientDBO().getModelForClass(ClientDBO);
   }
 
   getDescription(): string {
