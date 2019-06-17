@@ -13,8 +13,6 @@ export class Database {
   }
 
   private createConnection() {
-    const gg = new ClientDBO();
-
     this.mongoose.connect(
       this.databaseUri,
       { useNewUrlParser: true },
