@@ -7,6 +7,7 @@ export class Groupchat extends AbstractChat {
   private description: string;
   private pictureUri: string;
   private admins: Participant[];
+  private creator: Participant;
 
   constructor(
     _participants: Participant[],
@@ -15,13 +16,15 @@ export class Groupchat extends AbstractChat {
     _title: string,
     _description: string,
     _pictureUri: string,
-    _admins: Participant[]
+    _admins: Participant[],
+    _creator: Participant
   ) {
     super(_participants, _messages, _createdAt);
     this.title = _title;
     this.description = _description;
     this.pictureUri = _pictureUri;
     this.admins = _admins;
+    this.creator = _creator;
   }
 
   getTitle(): string {
@@ -36,7 +39,7 @@ export class Groupchat extends AbstractChat {
     return this.description;
   }
 
-  setDescription(_description): void {
+  setDescription(_description: string): void {
     this.description = _description;
   }
 
@@ -48,7 +51,15 @@ export class Groupchat extends AbstractChat {
     this.pictureUri = _pictureUri;
   }
 
-  getAdmins(): {
-    
+  getAdmins(): Participant[] {
+    return this.admins;
+  }
+
+  addAdminById(participant: Participant): void {
+    this.admins.push(participant);
+  }
+
+  removeAdminById(participant: Participant): void {
+    this.admins = this.admins.filter(e => e.id !== participant.id);
   }
 }
