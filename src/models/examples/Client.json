@@ -1,0 +1,17 @@
+{
+  "userId": 2,
+  "username": "quest1onmark",
+  "description": "a description",
+  "pictureUri": "google.com",
+  "conversations": [{
+    "id": 1
+  }],
+  "groupchats": [{
+    "id": 2
+  }],
+  "lastLogin": 123,
+  "friends": [],
+  "friendRequests": [],
+  "sentFriendRequests": [],
+  "createdAt": 123
+}
