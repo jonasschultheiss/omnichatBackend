@@ -20,6 +20,10 @@ export class AbstractChat {
     return this.participants;
   }
 
+  setParticipants(participants: Participant[]) {
+    this.participants = participants;
+  }
+
   addParticipantById(participant: Participant): void {
     this.participants.push(participant);
   }
@@ -30,6 +34,10 @@ export class AbstractChat {
 
   getMessages(): Message[] {
     return this.messages;
+  }
+
+  setMessages(messages: Message[]): void {
+    this.messages = messages;
   }
 
   addMessageById(message: Message): void {

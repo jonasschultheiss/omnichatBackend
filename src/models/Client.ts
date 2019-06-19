@@ -5,7 +5,6 @@ import { FriendRequest } from './interfaces/IFriendRequest';
 import { ClientDBO } from '../database/databaseobjects/Index';
 import { InstanceType } from 'typegoose';
 import { Model } from 'mongoose';
-import { rejects } from 'assert';
 
 export class Client extends User {
   private description: string;
