@@ -1,7 +1,5 @@
 import { User } from './User';
-import { Chat } from './interfaces/IChat';
-import { Friend } from './interfaces/IFriend';
-import { FriendRequest } from './interfaces/IFriendRequest';
+import { Chat, Friend, FriendRequest } from './interfaces/index';
 import { ClientDBO } from '../database/databaseobjects/Index';
 import { InstanceType } from 'typegoose';
 import { Model } from 'mongoose';
@@ -59,19 +57,19 @@ export class Client extends User {
   save(): Promise<Client> {
     return new Promise((resolve, reject) => {
       try {
-        this.clientDBO.updateMany(
-          { userId: this.getUserId() },
-          {
-            userId: this.getUserId(),
-            username: this.getUsername(),
-            description: this.getDescription(),
-            pictureUri: this.getPictureUri(),
-            conversations: this.getConversations(),
-            groupchats: this.getGroupchats(),
-          }
-        );
-
-        resolve();
+        this.clientDBO
+          .updateMany(
+            { userId: this.getUserId() },
+            {
+              userId: this.getUserId(),
+              username: this.getUsername(),
+              description: this.getDescription(),
+              pictureUri: this.getPictureUri(),
+              conversations: this.getConversations(),
+              groupchats: this.getGroupchats(),
+            }
+          )
+          .then(resolve);
       } catch (error) {
         console.log(`client could not be saved: ${error.message}`);
         reject(error);
