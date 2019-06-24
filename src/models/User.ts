@@ -1,10 +1,9 @@
 export class User {
   private userId: number;
-  private username: string;
+  private username?: string;
 
-  constructor(_userId: number, _username: string) {
+  constructor(_userId: number) {
     this.userId = _userId;
-    this.username = _username;
   }
 
   getUserId(): number {
@@ -12,6 +11,10 @@ export class User {
   }
 
   getUsername(): string {
-    return this.username;
+    return this.username!;
+  }
+
+  setUsername(_username: string): void {
+    this.username = _username;
   }
 }

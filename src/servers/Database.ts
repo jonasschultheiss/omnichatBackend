@@ -29,24 +29,5 @@ export class Database {
         });
       }
     );
-    const client1: Client = new Client(2, 'quest1onmark');
-    const client2: Client = new Client(1, 'devtest');
-    client1
-      .load()
-      .then(() => {
-        console.log(JSON.stringify(client1));
-        client1.addFriend({ id: 1 });
-        client1.setDescription('+++++++++++++++');
-        return client1.save();
-      })
-      .then(() => {
-        return client1.load();
-      })
-      .then(() => {
-        console.log(JSON.stringify(client1));
-      })
-      .catch(e => {
-        console.error(e);
-      });
   }
 }

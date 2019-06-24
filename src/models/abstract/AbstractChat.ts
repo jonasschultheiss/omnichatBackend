@@ -1,19 +1,25 @@
-import { Participant } from './../interfaces/IParticipant';
 import { Message } from '../interfaces/IMessage';
+import { Participant } from './../interfaces/index';
 
 export class AbstractChat {
+  private chatId: string;
   private participants: Participant[];
   private messages: Message[];
   private createdAt: number;
 
-  constructor(
-    _participants: Participant[],
-    _messages: Message[],
-    _createdAt: number
-  ) {
-    this.participants = _participants;
-    this.messages = _messages;
-    this.createdAt = _createdAt;
+  constructor() {
+    this.chatId = '';
+    this.participants = [];
+    this.messages = [];
+    this.createdAt = 0;
+  }
+
+  getChatId(): string {
+    return this.chatId;
+  }
+
+  setChatId(_chatId: string): void {
+    this.chatId = _chatId;
   }
 
   getParticipants(): Participant[] {
@@ -24,8 +30,8 @@ export class AbstractChat {
     this.participants = participants;
   }
 
-  addParticipantById(participant: Participant): void {
-    this.participants.push(participant);
+  addParticipantById(participantId: number): void {
+    this.participants.push({ id: participantId });
   }
 
   removeParticipantById(participant: Participant): void {
@@ -40,8 +46,8 @@ export class AbstractChat {
     this.messages = messages;
   }
 
-  addMessageById(message: Message): void {
-    this.messages.push(message);
+  addMessageById(messageId: number): void {
+    this.messages.push({ id: messageId });
   }
 
   getCreatedAt(): number {

@@ -16,9 +16,10 @@ export class Client extends User {
   private createdAt: number;
   private clientDBO: Model<InstanceType<ClientDBO>>;
 
-  constructor(_userId: number, _username: string) {
-    super(_userId, _username);
+  constructor(_userId: number) {
+    super(_userId);
 
+    this.setUsername('');
     this.description = '';
     this.pictureUri = '';
     this.conversations = [];
@@ -36,6 +37,7 @@ export class Client extends User {
     return new Promise((resolve, reject) => {
       try {
         this.clientDBO.findOne({ userId: this.getUserId() }).then(client => {
+          this.setUsername(client!.username!);
           this.setDescription(client!.description!);
           this.setPictureUri(client!.pictureUri!);
           this.setConversations(client!.conversations!);
@@ -67,6 +69,11 @@ export class Client extends User {
               pictureUri: this.getPictureUri(),
               conversations: this.getConversations(),
               groupchats: this.getGroupchats(),
+              lastLogin: this.getLastLogin(),
+              friends: this.getFriends(),
+              friendRequests: this.getFriendRequests(),
+              sentFriendRequests: this.getSentFriendRequests(),
+              createdAt: this.getCreatedAt(),
             }
           )
           .then(resolve);
@@ -77,20 +84,29 @@ export class Client extends User {
     });
   }
 
-  saveAsNew(): void {
-    try {
-      const client = new this.clientDBO({
-        userId: this.getUserId(),
-        username: this.getUsername(),
-        description: this.getDescription(),
-        pictureUri: this.getPictureUri(),
-        conversations: this.getConversations(),
-        groupchats: this.getGroupchats(),
-      });
-      client.save();
-    } catch (error) {
-      console.log(`client could not be saved: ${error.message}`);
-    }
+  saveAsNew(): Promise<Client> {
+    return new Promise((resolve, reject) => {
+      try {
+        const client = new this.clientDBO({
+          userId: this.getUserId(),
+          username: this.getUsername(),
+          description: this.getDescription(),
+          pictureUri: this.getPictureUri(),
+          conversations: this.getConversations(),
+          groupchats: this.getGroupchats(),
+          lastLogin: this.getLastLogin(),
+          friends: this.getFriends(),
+          friendRequests: this.getFriendRequests(),
+          sentFriendRequests: this.getSentFriendRequests(),
+          createdAt: this.getCreatedAt(),
+        });
+        client.save();
+        resolve();
+      } catch (error) {
+        console.log(`client could not be saved: ${error.message}`);
+        reject(error);
+      }
+    });
   }
 
   getDescription(): string {
@@ -117,8 +133,8 @@ export class Client extends User {
     this.conversations = conversations;
   }
 
-  addConversation(chat: Chat): void {
-    this.conversations.push(chat);
+  addConversation(chatId: number): void {
+    this.conversations.push({ id: chatId });
   }
 
   getGroupchats(): Chat[] {
@@ -129,8 +145,8 @@ export class Client extends User {
     this.groupchats = groupchats;
   }
 
-  addGroupchat(chat: Chat): void {
-    this.groupchats.push(chat);
+  addGroupchat(chatId: number): void {
+    this.groupchats.push({ id: chatId });
   }
 
   leaveGroupchat(chat: Chat): void {
@@ -155,8 +171,8 @@ export class Client extends User {
     this.friends = friends;
   }
 
-  addFriend(user: Friend): void {
-    this.friends.push(user);
+  addFriend(userId: number): void {
+    this.friends.push({ id: userId });
   }
 
   removeFriend(user: Friend): void {
@@ -171,8 +187,8 @@ export class Client extends User {
     this.friendRequests = requests;
   }
 
-  addFriendRequest(user: Friend): void {
-    this.friendRequests.push(user);
+  addFriendRequest(userId: number): void {
+    this.friendRequests.push({ id: userId });
   }
 
   removeFriendRequest(user: Friend): void {

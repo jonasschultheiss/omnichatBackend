@@ -7,24 +7,13 @@ export class Groupchat extends AbstractChat {
   private description: string;
   private pictureUri: string;
   private admins: Participant[];
-  private creator: Participant;
 
-  constructor(
-    _participants: Participant[],
-    _messages: Message[],
-    _createdAt: number,
-    _title: string,
-    _description: string,
-    _pictureUri: string,
-    _admins: Participant[],
-    _creator: Participant
-  ) {
-    super(_participants, _messages, _createdAt);
-    this.title = _title;
-    this.description = _description;
-    this.pictureUri = _pictureUri;
-    this.admins = _admins;
-    this.creator = _creator;
+  constructor() {
+    super();
+    this.title = '';
+    this.description = '';
+    this.pictureUri = '';
+    this.admins = [];
   }
 
   getTitle(): string {

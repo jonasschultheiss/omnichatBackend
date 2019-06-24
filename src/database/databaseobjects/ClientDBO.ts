@@ -8,6 +8,9 @@ export class ClientDBO extends Typegoose {
   userId?: number;
 
   @prop()
+  username?: string;
+
+  @prop()
   description?: string;
 
   @prop()

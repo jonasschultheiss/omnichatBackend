@@ -1,8 +1,10 @@
-import { prop, Typegoose, ModelType, InstanceType } from 'typegoose';
-import { Participant } from '../../models/interfaces/IParticipant';
-import { Message } from '../../models/Index';
+import { prop, Typegoose, ModelType, InstanceType, pre } from 'typegoose';
+import { Participant, Message } from './../../models/interfaces/index';
 
 export class ConversationDBO extends Typegoose {
+  @prop()
+  chatId?: string;
+
   @prop()
   participants?: Participant[];
 
