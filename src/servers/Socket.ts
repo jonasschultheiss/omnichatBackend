@@ -1,7 +1,7 @@
 import { createServer, Server } from 'http';
 import * as socketio from 'socket.io';
 
-import { Message } from '../models/Index';
+import { Message, Client, Conversation } from '../models/Index';
 import { AbstractServer } from './AbstractServer';
 
 export class Socket extends AbstractServer {
@@ -22,9 +22,29 @@ export class Socket extends AbstractServer {
     });
 
     this.io.on('connect', (socket: socketio.Socket) => {
+      let client: Client;
       console.log('Connected client on port %s.', this.getPort());
       console.log(`socket id: ${socket.id}`);
       socket.join('global');
+
+      socket.on('init', (c: Client) => {
+        client = new Client(c.)
+        client.getDescription();
+        client.setSocketId(socket.id);
+        console.log(
+          `client "${client.getUsername()}" connected as "${socket.id}"`
+        );
+        client.getConversations().forEach(conversation => {
+          socket.join(conversation.id);
+          socket.in(conversation.id).on('message', (message: Message) => {
+            this.io.sockets.in(conversation.id).emit('message', message);
+          });
+        });
+      });
+
+      socket.on('newConversation', (c: Conversation) => {
+        socket.join(c.getChatId());
+      });
 
       socket.in('global').on('message', (m: Message) => {
         console.log('[server](message): %s', JSON.stringify(m));
@@ -32,7 +52,8 @@ export class Socket extends AbstractServer {
       });
 
       socket.on('disconnect', () => {
-        console.log('Client disconnected');
+        client.setLastLogin(Date.now());
+        console.log(`${client.getUsername()} disconnected`);
       });
     });
   }

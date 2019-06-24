@@ -15,6 +15,7 @@ export class Client extends User {
   private sentFriendRequests: FriendRequest[];
   private createdAt: number;
   private clientDBO: Model<InstanceType<ClientDBO>>;
+  private socketId: string;
 
   constructor(_userId: number) {
     super(_userId);
@@ -29,6 +30,7 @@ export class Client extends User {
     this.friendRequests = [];
     this.sentFriendRequests = [];
     this.createdAt = 0;
+    this.socketId = '';
 
     this.clientDBO = new ClientDBO().getModelForClass(ClientDBO);
   }
@@ -107,6 +109,14 @@ export class Client extends User {
         reject(error);
       }
     });
+  }
+
+  setSocketId(socketId: string): void {
+    this.socketId = socketId;
+  }
+
+  getSocketId(): string {
+    return this.socketId;
   }
 
   getDescription(): string {
