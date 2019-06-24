@@ -15,6 +15,7 @@ export class ConversationController {
     const conversation = new Conversation();
     conversation.addParticipantById(req.params.userId);
     conversation.addParticipantById(req.body.participant);
+    conversation.setCreatedAt(Date.now());
     await conversation.saveAsNew();
     await conversation.addConversationToClient(
       req.params.userId,

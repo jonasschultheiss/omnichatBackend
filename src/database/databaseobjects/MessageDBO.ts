@@ -1,21 +1,24 @@
 import { prop, Typegoose, ModelType, InstanceType } from 'typegoose';
 
 export class MessageDBO extends Typegoose {
-  @prop({ required: true })
+  @prop()
+  messageId?: string;
+
+  @prop()
+  chatId?: string;
+
+  @prop()
   senderId?: number;
 
-  @prop({ required: true })
+  @prop()
   senderName?: string;
 
-  @prop({ required: true })
+  @prop()
   body?: string;
 
-  @prop({ required: true })
-  chatId?: number;
-
-  @prop({ required: true })
+  @prop()
   isEdited?: boolean;
 
-  @prop({ required: true })
+  @prop()
   timestamp?: number;
 }

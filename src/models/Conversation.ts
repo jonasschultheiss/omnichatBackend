@@ -14,7 +14,7 @@ export class Conversation extends AbstractChat {
     this.conversationDBO = new ConversationDBO().getModelForClass(
       ConversationDBO
     );
-    this.clientDBO = new ConversationDBO().getModelForClass(ClientDBO);
+    this.clientDBO = new ClientDBO().getModelForClass(ClientDBO);
   }
 
   load(): Promise<Conversation> {
@@ -23,7 +23,6 @@ export class Conversation extends AbstractChat {
         this.conversationDBO
           .findOne({ chatId: this.getChatId() })
           .then(chat => {
-            console.log(chat);
             this.setChatId(chat!.chatId!);
             this.setParticipants(chat!.participants!);
             this.setMessages(chat!.messages!);
@@ -61,9 +60,9 @@ export class Conversation extends AbstractChat {
       try {
         const conversation = new this.conversationDBO({
           chatId: 0,
-          participants: this.getParticipants(),
+          participants: [],
           messages: [],
-          createdAt: Date.now(),
+          createdAt: this.getCreatedAt(),
         });
         await conversation.save();
         this.setChatId(conversation._id);

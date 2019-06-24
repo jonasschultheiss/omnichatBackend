@@ -53,4 +53,8 @@ export class AbstractChat {
   getCreatedAt(): number {
     return this.createdAt;
   }
+
+  setCreatedAt(timestamp: number): void {
+    this.createdAt = timestamp;
+  }
 }
