@@ -46,7 +46,7 @@ export class AbstractChat {
     this.messages = messages;
   }
 
-  addMessageById(messageId: number): void {
+  addMessageById(messageId: string): void {
     this.messages.push({ id: messageId });
   }
 

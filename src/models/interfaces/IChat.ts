@@ -1,3 +1,3 @@
 export interface Chat {
-  id: number;
+  id: string;
 }

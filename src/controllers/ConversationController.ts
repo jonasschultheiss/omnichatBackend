@@ -20,6 +20,10 @@ export class ConversationController {
       req.params.userId,
       conversation.getChatId()
     );
+    await conversation.addConversationToClient(
+      req.body.participant,
+      conversation.getChatId()
+    );
     res.json(conversation);
   };
 }

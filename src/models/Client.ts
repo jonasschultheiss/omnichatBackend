@@ -133,7 +133,7 @@ export class Client extends User {
     this.conversations = conversations;
   }
 
-  addConversation(chatId: number): void {
+  addConversation(chatId: string): void {
     this.conversations.push({ id: chatId });
   }
 
@@ -145,7 +145,7 @@ export class Client extends User {
     this.groupchats = groupchats;
   }
 
-  addGroupchat(chatId: number): void {
+  addGroupchat(chatId: string): void {
     this.groupchats.push({ id: chatId });
   }
 
