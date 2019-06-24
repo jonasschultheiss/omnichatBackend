@@ -27,23 +27,31 @@ export class Socket extends AbstractServer {
       console.log(`socket id: ${socket.id}`);
       socket.join('global');
 
-      socket.on('init', (c: Client) => {
-        client = new Client(c.)
+      socket.on('init', async c => {
+        console.log(c.userId);
+        client = new Client(c.userId);
+        await client.load();
         client.getDescription();
         client.setSocketId(socket.id);
         console.log(
           `client "${client.getUsername()}" connected as "${socket.id}"`
         );
-        client.getConversations().forEach(conversation => {
-          socket.join(conversation.id);
-          socket.in(conversation.id).on('message', (message: Message) => {
-            this.io.sockets.in(conversation.id).emit('message', message);
-          });
+        socket.on('message', message => {
+          socket.emit('message', message);
         });
+        // client.getConversations().forEach(conversation => {
+        //   socket.join(conversation.id);
+        //   socket.in(conversation.id).on('message', (message: Message) => {
+        //     this.io.sockets.in(conversation.id).emit('message', message);
+        //   });
+        // });
       });
 
-      socket.on('newConversation', (c: Conversation) => {
-        socket.join(c.getChatId());
+      socket.on('newConversation', c => {
+        socket.join(c.chatId());
+        socket.in(c.chatId).on('message', (message: Message) => {
+          this.io.sockets.in(c.chatId).emit('message', message);
+        });
       });
 
       socket.in('global').on('message', (m: Message) => {
