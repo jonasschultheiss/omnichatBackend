@@ -59,9 +59,9 @@ export class Conversation extends AbstractChat {
     return new Promise(async (resolve, reject) => {
       try {
         const conversation = new this.conversationDBO({
-          chatId: 0,
-          participants: [],
-          messages: [],
+          chatId: this.getChatId(),
+          participants: this.getParticipants(),
+          messages: this.getMessages(),
           createdAt: this.getCreatedAt(),
         });
         await conversation.save();
